@@ -2,7 +2,6 @@ name: CI
 
 on:
   push:
-    branches: [ master ]
   pull_request:
     branches: [ master ]
 
@@ -18,3 +17,11 @@ jobs:
         run: cmake -B build && make -C build
         env:
           CC: /usr/bin/${{ matrix.cc }}
+  test:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build
+        run: cmake -B build && make -C build
+      - name: Test
+        run: cd build && ctest
